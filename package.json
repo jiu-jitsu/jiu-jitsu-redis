@@ -1,0 +1,8 @@
+{
+  "name": "jiu-jitsu-redis",
+  "version": "0.0.1",
+  "author": "Vitaly Anagorsky <vitaly@anagorsky.com>",
+  "dependencies": {
+    "jiu-jitsu-error": "git+https://github.com/jiu-jitsu/jiu-jitsu-error.git"
+  }
+}
