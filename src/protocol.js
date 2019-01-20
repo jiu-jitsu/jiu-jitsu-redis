@@ -1,12 +1,12 @@
 
 /**
- * Native
+ *
  */
 
 const events = require('events')
 
 /**
- * Protocol
+ *
  */
 
 class Protocol extends events {
@@ -180,7 +180,7 @@ class Protocol extends events {
 }
 
 /**
- * Export
+ *
  */
 
 module.exports = Protocol

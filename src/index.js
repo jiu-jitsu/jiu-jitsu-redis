@@ -1,6 +1,6 @@
 
 /**
- * Native
+ *
  */
 
 const net = require('net')
@@ -8,19 +8,19 @@ const util = require('util')
 const events = require('events')
 
 /**
- * Jiu-Jitsu
+ *
  */
 
 const ___error = require('jiu-jitsu-error')
 
 /**
- * Protocol
+ *
  */
 
 const ___protocol = require('./protocol')
 
 /**
- * Redis
+ *
  */
 
 class Redis extends events {
@@ -38,7 +38,7 @@ class Redis extends events {
 		this.___connect()
 
 		/**
-		 * Workaround
+		 *
 		 */
 
 		this.lua = util.promisify(this.lua)
@@ -182,7 +182,7 @@ class Redis extends events {
 }
 
 /**
- * Export
+ *
  */
 
 module.exports = Redis
