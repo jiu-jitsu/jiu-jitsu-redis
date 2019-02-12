@@ -167,7 +167,7 @@ class Protocol extends events {
 
 			} else {
 
-				throw new Error('UNKNOW_ARGUMENT_TYPE')
+				throw new Error('UNKNOWN_ARGUMENT_TYPE')
 
 			}
 

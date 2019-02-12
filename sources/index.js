@@ -11,12 +11,7 @@ const events = require('events')
  *
  */
 
-const ___error = require('jiu-jitsu-error')
-
-/**
- *
- */
-
+const ___error = require('./error')
 const ___protocol = require('./protocol')
 
 /**
