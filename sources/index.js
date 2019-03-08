@@ -36,7 +36,6 @@ class Redis extends events {
 		 *
 		 */
 
-		this.___buffers = []
 		this.___callbacks = []
 		this.___timeout = 1000
 		this.___connected = false
@@ -54,6 +53,10 @@ class Redis extends events {
 
 	___auth () {
 
+		/**
+		 *
+		 */
+
 		if (!this.___endpoint.password) {
 
 			/**
@@ -65,7 +68,7 @@ class Redis extends events {
 		}
 
 		/**
-		 * Build an auth command
+		 *
 		 */
 
 		const cmd = ['AUTH', this.___endpoint.password]
@@ -76,9 +79,13 @@ class Redis extends events {
 		 *
 		 */
 
-		this.___buffers.push(buffer)
+		this.___socket.write(buffer)
+
+		/**
+		 *
+		 */
+
 		this.___callbacks.push(callback)
-		this.___write()
 
 	}
 
@@ -117,7 +124,6 @@ class Redis extends events {
 		 *
 		 */
 
-		this.___buffers = []
 		this.___callbacks = []
 		this.___reconnecting = true
 		this.___socket.___protocol.flush()
@@ -162,19 +168,14 @@ class Redis extends events {
 			 */
 
 			this.___connected = true
-			process.nextTick(() => this.emit('ready'))
+
+			/**
+			 *
+			 */
+
+			process.nextTick(() => this.emit('ready', error))
 
 		}
-
-	}
-
-	___onError (error) {
-
-		/**
-		 *
-		 */
-
-		this.___reconnect(error)
 
 	}
 
@@ -188,13 +189,35 @@ class Redis extends events {
 
 	}
 
+	___onError (error) {
+
+		/**
+		 *
+		 */
+
+		process.nextTick(() => this.emit('error', error))
+
+		/**
+		 *
+		 */
+
+		this.___reconnect(error)
+
+	}
+
 	___onEnd (error) {
 
 		/**
 		 *
 		 */
 
-		this.___reconnect()
+		process.nextTick(() => this.emit('error', error))
+
+		/**
+		 *
+		 */
+
+		this.___reconnect(error)
 
 	}
 
@@ -216,36 +239,9 @@ class Redis extends events {
 			 *
 			 */
 
-			return callback(message.error, message.data) | this.___write()
+			callback(message.error, message.data)
 
 		}
-
-	}
-
-	___write () {
-
-		/**
-		 *
-		 */
-
-		if (!this.___buffers.length) {
-
-			/**
-			 *
-			 */
-
-			return
-
-		}
-
-		const buffer = Buffer.concat(this.___buffers)
-
-		/**
-		 *
-		 */
-
-		this.___buffers = []
-		this.___socket.write(buffer)
 
 	}
 
@@ -276,9 +272,13 @@ class Redis extends events {
 		 *
 		 */
 
-		this.___buffers.push(buffer)
+		this.___socket.write(buffer)
+
+		/**
+		 *
+		 */
+
 		this.___callbacks.push(callback)
-		this.___write()
 
 	}
 
