@@ -289,5 +289,3 @@ class Redis extends events {
  */
 
 module.exports = Redis
-
-

@@ -384,5 +384,3 @@ class Protocol extends events {
  */
 
 module.exports = Protocol
-
-
