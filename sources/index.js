@@ -51,6 +51,10 @@ class Redis extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	___auth () {
 
 		/**
@@ -58,13 +62,7 @@ class Redis extends events {
 		 */
 
 		if (!this.___endpoint.password) {
-
-			/**
-			 *
-			 */
-
 			return
-
 		}
 
 		/**
@@ -89,6 +87,10 @@ class Redis extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	___connect () {
 
 		/**
@@ -105,6 +107,10 @@ class Redis extends events {
 			.connect(this.___endpoint)
 
 	}
+
+	/**
+	 *
+	 */
 
 	___reconnect (error) {
 
@@ -136,6 +142,10 @@ class Redis extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	___protocol () {
 
 		/**
@@ -146,6 +156,10 @@ class Redis extends events {
 		this.___socket.___protocol.on('message', (message) => this.___onMessage(message))
 
 	}
+
+	/**
+	 *
+	 */
 
 	___onConnect (error) {
 
@@ -179,6 +193,10 @@ class Redis extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	___onData (chunk) {
 
 		/**
@@ -188,6 +206,10 @@ class Redis extends events {
 		this.___socket.___protocol.read(chunk)
 
 	}
+
+	/**
+	 *
+	 */
 
 	___onError (error) {
 
@@ -205,6 +227,10 @@ class Redis extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	___onEnd (error) {
 
 		/**
@@ -221,6 +247,10 @@ class Redis extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	___onMessage (message) {
 
 		/**
@@ -234,16 +264,14 @@ class Redis extends events {
 		 */
 
 		if (callback) {
-
-			/**
-			 *
-			 */
-
 			callback(message.error, message.data)
-
 		}
 
 	}
+
+	/**
+	 *
+	 */
 
 	lua (script, callback) {
 
@@ -252,13 +280,7 @@ class Redis extends events {
 		 */
 
 		if (!this.___connected || this.___reconnecting) {
-
-			/**
-			 *
-			 */
-
 			return callback(___error('jiu-jitsu-redis/REDIS_SOCKET_IS_NOT_READY'))
-
 		}
 
 		/**

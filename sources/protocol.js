@@ -32,6 +32,10 @@ class Protocol extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	flush () {
 
 		/**
@@ -42,6 +46,10 @@ class Protocol extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	read (chunk) {
 
 		/**
@@ -49,13 +57,7 @@ class Protocol extends events {
 		 */
 
 		if (chunk) {
-
-			/**
-			 *
-			 */
-
 			this.___read.buffer = Buffer.concat([this.___read.buffer, chunk])
-
 		}
 
 		/**
@@ -63,13 +65,7 @@ class Protocol extends events {
 		 */
 
 		if (!this.___read.buffer.length) {
-
-			/**
-			 *
-			 */
-
 			return
-
 		}
 
 		/**
@@ -83,13 +79,7 @@ class Protocol extends events {
 		 */
 
 		if (index_of_crlf < 0) {
-
-			/**
-			 *
-			 */
-
 			return
-
 		}
 
 		/**
@@ -235,13 +225,7 @@ class Protocol extends events {
 		 */
 
 		if (!message.ok) {
-
-			/**
-			 *
-			 */
-
 			return
-
 		}
 
 		/**
@@ -277,6 +261,10 @@ class Protocol extends events {
 
 	}
 
+	/**
+	 *
+	 */
+
 	write (args) {
 
 		/**
@@ -304,67 +292,16 @@ class Protocol extends events {
 			 */
 
 			if (!args[i]) {
-
-				/**
-				 *
-				 */
-
 				message += `$0\r\n\r\n`
-
-				/**
-				 *
-				 */
-
 			} else if (args[i].constructor === Number) {
-
-				/**
-				 *
-				 */
-
 				message += `$${Buffer.byteLength((args[i].toString()))}\r\n${args[i]}\r\n`
-
-				/**
-				 *
-				 */
-
 			} else if (args[i].constructor === String) {
-
-				/**
-				 *
-				 */
-
 				message += `$${Buffer.byteLength((args[i]))}\r\n${args[i]}\r\n`
-
-				/**
-				 *
-				 */
-
 			} else if (args[i].constructor === Object) {
-
-				/**
-				 *
-				 */
-
 				stringified = JSON.stringify(args[i])
-
-				/**
-				 *
-				 */
-
 				message += `$${Buffer.byteLength((stringified))}\r\n${stringified}\r\n`
-
-				/**
-				 *
-				 */
-
 			} else {
-
-				/**
-				 *
-				 */
-
 				throw new Error('UNKNOWN_ARGUMENT_TYPE')
-
 			}
 
 		}
