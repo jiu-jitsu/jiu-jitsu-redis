@@ -271,7 +271,7 @@ class Protocol extends events {
 		 *
 		 */
 
-		let i = 0
+		let i
 		let message = ``
 		let stringify = ``
 
@@ -293,16 +293,42 @@ class Protocol extends events {
 
 			if (!args[i]) {
 				message += `$0\r\n\r\n`
-			} else if (args[i].constructor === Number) {
+				continue
+			}
+
+			/**
+			 *
+			 */
+
+			if (args[i].constructor === Number) {
 				message += `$${Buffer.byteLength((args[i].toString()))}\r\n${args[i]}\r\n`
-			} else if (args[i].constructor === String) {
+				continue
+			}
+
+			/**
+			 *
+			 */
+
+			if (args[i].constructor === String) {
 				message += `$${Buffer.byteLength((args[i]))}\r\n${args[i]}\r\n`
-			} else if (args[i].constructor === Object) {
+				continue
+			}
+
+			/**
+			 *
+			 */
+
+			if (args[i].constructor === Object) {
 				stringify = JSON.stringify(args[i])
 				message += `$${Buffer.byteLength((stringify))}\r\n${stringify}\r\n`
-			} else {
-				throw new Error(`UNKNOWN_ARGUMENT_TYPE`)
+				continue
 			}
+
+			/**
+			 *
+			 */
+
+			throw new Error(`UNKNOWN_ARGUMENT_TYPE`)
 
 		}
 
