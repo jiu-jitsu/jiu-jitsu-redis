@@ -244,7 +244,7 @@ class Protocol extends events {
 			 *
 			 */
 
-		} catch (failed) {
+		} catch (error) {
 
 			/**
 			 *
