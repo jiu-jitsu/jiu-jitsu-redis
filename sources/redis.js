@@ -129,7 +129,10 @@ class Redis extends events {
 		 *
 		 */
 
-		callbacks.forEach((callback) => callback(___error(`jiu-jitsu-redis/REDIS_CONNECTION_HAS_BEEN_CLOSED`, `FAIL`)))
+		callbacks.forEach((callback) => {
+			const error = ___error(null, `jiu-jitsu-redis`, `FAIL`, `REDIS_CONNECTION_HAS_BEEN_CLOSED`, error)
+			callback(error)
+		})
 
 		/**
 		 *
@@ -285,7 +288,8 @@ class Redis extends events {
 		 */
 
 		if (!this.___connected || this.___reconnecting) {
-			return callback(___error(`jiu-jitsu-redis/REDIS_SOCKET_IS_NOT_READY`, `FAIL`))
+			const error = ___error(null, `jiu-jitsu-redis`, `FAIL`, `REDIS_SOCKET_IS_NOT_READY`)
+			return callback(error)
 		}
 
 		/**
