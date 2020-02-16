@@ -291,15 +291,6 @@ class Protocol extends events {
 			 *
 			 */
 
-			if (!args[i]) {
-				message += `$0\r\n\r\n`
-				continue
-			}
-
-			/**
-			 *
-			 */
-
 			if (args[i].constructor === Number) {
 				message += `$${Buffer.byteLength((args[i].toString()))}\r\n${args[i]}\r\n`
 				continue
