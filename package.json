@@ -3,6 +3,6 @@
   "version": "0.0.1",
   "author": "Vitaly Anagorsky <vitaly@anagorsky.com>",
   "dependencies": {
-    "jiu-jitsu-error": "git+https://github.com/jiu-jitsu/jiu-jitsu-error.git"
+    "jiu-jitsu-log": "git+https://github.com/jiu-jitsu/jiu-jitsu-log.git"
   }
 }

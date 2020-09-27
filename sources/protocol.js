@@ -37,13 +37,7 @@ class Protocol extends events {
 	 */
 
 	flush () {
-
-		/**
-		 *
-		 */
-
 		this.___read.buffer = Buffer.alloc(0)
-
 	}
 
 	/**
@@ -87,7 +81,6 @@ class Protocol extends events {
 		 */
 
 		const message = {
-			id: null,
 			ok: null,
 			error: null,
 			data: null
@@ -233,24 +226,8 @@ class Protocol extends events {
 		 */
 
 		try {
-
-			/**
-			 *
-			 */
-
 			message.data = JSON.parse(message.data)
-
-			/**
-			 *
-			 */
-
-		} catch (error) {
-
-			/**
-			 *
-			 */
-
-		}
+		} catch (error) {}
 
 		/**
 		 *
