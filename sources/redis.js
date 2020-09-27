@@ -94,7 +94,7 @@ class Redis {
 		const resolve = promise && promise[0]
 		const reject = promise && promise[1]
 		message.error && reject && reject(message.error)
-		message.data && resolve && resolve(message.data)
+		!message.error && resolve && resolve(message.data)
 	}
 
 	/**
