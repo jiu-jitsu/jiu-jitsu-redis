@@ -3,19 +3,19 @@
  *
  */
 
-const net = require(`net`)
+const net = require("net")
 
 /**
  *
  */
 
-const ___log = require(`jiu-jitsu-log`)
+const ___log = require("jiu-jitsu-log")
 
 /**
  *
  */
 
-const ___protocol = require(`./protocol`)
+const ___protocol = require("./protocol")
 
 /**
  *
@@ -39,21 +39,21 @@ class Redis {
 	 */
 
 	async connect () {
-		await new Promise((resolve) => this.___connect(resolve))
+		await new Promise(async (resolve) => await this.___connect(resolve))
 	}
 
 	/**
 	 *
 	 */
 
-	___connect (resolve) {
+	async ___connect (resolve) {
 		const options = this.___options
 		this.___socket = new net.Socket()
 		this.___protocol = new ___protocol()
-		this.___protocol.on(`message`, (message) => this.___onProtocolMessage(message))
-		this.___socket.on(`connect`, (error) => this.___onSocketConnect(error, resolve))
-		this.___socket.on(`error`, (error) => this.___onSocketError(error))
-		this.___socket.on(`data`, (data) => this.___onSocketData(data))
+		this.___protocol.on("message", async (message) => await this.___onProtocolMessage(message))
+		this.___socket.on("connect", async (error) => await this.___onSocketConnect(error, resolve))
+		this.___socket.on("error", async (error) => await this.___onSocketError(error))
+		this.___socket.on("data", async (data) => await this.___onSocketData(data))
 		this.___socket.connect(options)
 	}
 
@@ -61,9 +61,9 @@ class Redis {
 	 *
 	 */
 
-	___onSocketConnect (error, resolve) {
+	async ___onSocketConnect (error, resolve) {
 		const options = this.___options
-		___log(`jiu-jitsu-redis`, `OK`, `${options.db} ✔`)
+		await ___log("jiu-jitsu-redis", "OK", `${options.db} ✔`)
 		resolve(error)
 	}
 
@@ -71,9 +71,9 @@ class Redis {
 	 *
 	 */
 
-	___onSocketError (error) {
+	async ___onSocketError (error) {
 		const options = this.___options
-		___log(`jiu-jitsu-redis`, `FAIL`, `${options.db} !`, error, true)
+		await ___log("jiu-jitsu-redis", "FAIL", `${options.db} !`, error, true)
 		process.exit(1)
 	}
 
@@ -81,7 +81,7 @@ class Redis {
 	 *
 	 */
 
-	___onSocketData (data) {
+	async ___onSocketData (data) {
 		this.___protocol.read(data)
 	}
 
@@ -89,7 +89,7 @@ class Redis {
 	 *
 	 */
 
-	___onProtocolMessage (message) {
+	async ___onProtocolMessage (message) {
 		const promise = this.___promises.shift()
 		const resolve = promise && promise[0]
 		const reject = promise && promise[1]
@@ -103,7 +103,7 @@ class Redis {
 
 	async lua (script) {
 		return await new Promise((resolve, reject) => {
-			const transaction = [`EVAL`, script, 0]
+			const transaction = ["EVAL", script, 0]
 			const buffer = this.___protocol.write(transaction)
 			this.___promises.push([resolve, reject])
 			this.___socket.write(buffer)

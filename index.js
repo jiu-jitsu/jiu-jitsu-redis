@@ -3,4 +3,4 @@
  *
  */
 
-module.exports = require(`./sources/redis`)
+module.exports = require("./sources/redis")

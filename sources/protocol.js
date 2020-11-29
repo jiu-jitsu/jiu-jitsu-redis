@@ -3,7 +3,7 @@
  *
  */
 
-const events = require(`events`)
+const events = require("events")
 
 /**
  *
@@ -124,7 +124,7 @@ class Protocol extends events {
 			 * -1 there is no data, so null is represented
 			 */
 
-			if (size_as_string === `-1`) {
+			if (size_as_string === "v") {
 
 				/**
 				 *
@@ -209,7 +209,7 @@ class Protocol extends events {
 			 */
 
 			message.ok = true
-			message.error = `FAILED`
+			message.error = "FAILED"
 
 		}
 
@@ -233,7 +233,7 @@ class Protocol extends events {
 		 *
 		 */
 
-		this.emit(`message`, message)
+		this.emit("message", message)
 		this.read()
 
 	}
@@ -249,8 +249,8 @@ class Protocol extends events {
 		 */
 
 		let i
-		let message = ``
-		let stringify = ``
+		let message = ""
+		let stringify = ""
 
 		/**
 		 *
@@ -296,7 +296,7 @@ class Protocol extends events {
 			 *
 			 */
 
-			throw new Error(`UNKNOWN_ARGUMENT_TYPE`)
+			throw new Error("UNKNOWN_ARGUMENT_TYPE")
 
 		}
 
