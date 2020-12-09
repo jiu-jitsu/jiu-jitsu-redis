@@ -9,13 +9,13 @@ const net = require("net")
  *
  */
 
-const ___log = require("jiu-jitsu-log")
+const LOG = require("jiu-jitsu-log")
 
 /**
  *
  */
 
-const ___protocol = require("./protocol")
+const Protocol = require("./protocol")
 
 /**
  *
@@ -49,7 +49,7 @@ class Redis {
 	async ___connect (resolve) {
 		const options = this.___options
 		this.___socket = new net.Socket()
-		this.___protocol = new ___protocol()
+		this.___protocol = new Protocol()
 		this.___protocol.on("message", async (message) => await this.___onProtocolMessage(message))
 		this.___socket.on("connect", async (error) => await this.___onSocketConnect(error, resolve))
 		this.___socket.on("error", async (error) => await this.___onSocketError(error))
@@ -63,7 +63,7 @@ class Redis {
 
 	async ___onSocketConnect (error, resolve) {
 		const options = this.___options
-		await ___log("jiu-jitsu-redis", "OK", `${options.db} ✔`)
+		new LOG("jiu-jitsu-redis|CONNECT", "OK", [`${options.db} ✔`], true)
 		resolve(error)
 	}
 
@@ -73,7 +73,7 @@ class Redis {
 
 	async ___onSocketError (error) {
 		const options = this.___options
-		await ___log("jiu-jitsu-redis", "FAIL", `${options.db} !`, error, true)
+		new LOG("jiu-jitsu-redis|CONNECT", "ERROR", [`${options.db} !`, error], true)
 		process.exit(1)
 	}
 
@@ -82,7 +82,7 @@ class Redis {
 	 */
 
 	async ___onSocketData (data) {
-		this.___protocol.read(data)
+		await this.___protocol.read(data)
 	}
 
 	/**
@@ -102,9 +102,9 @@ class Redis {
 	 */
 
 	async lua (script) {
-		return await new Promise((resolve, reject) => {
+		return await new Promise(async (resolve, reject) => {
 			const transaction = ["EVAL", script, 0]
-			const buffer = this.___protocol.write(transaction)
+			const buffer = await this.___protocol.write(transaction)
 			this.___promises.push([resolve, reject])
 			this.___socket.write(buffer)
 		})

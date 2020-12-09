@@ -36,7 +36,7 @@ class Protocol extends events {
 	 *
 	 */
 
-	flush () {
+	async flush () {
 		this.___read.buffer = Buffer.alloc(0)
 	}
 
@@ -44,7 +44,7 @@ class Protocol extends events {
 	 *
 	 */
 
-	read (chunk) {
+	async read (chunk) {
 
 		/**
 		 *
@@ -242,7 +242,7 @@ class Protocol extends events {
 	 *
 	 */
 
-	write (args) {
+	async write (args) {
 
 		/**
 		 *
