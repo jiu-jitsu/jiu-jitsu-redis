@@ -124,7 +124,7 @@ class Protocol extends events {
 			 * -1 there is no data, so null is represented
 			 */
 
-			if (size_as_string === "v") {
+			if (size_as_string === "-1") {
 
 				/**
 				 *
@@ -233,8 +233,8 @@ class Protocol extends events {
 		 *
 		 */
 
-		this.emit("message", message)
-		this.read()
+		process.nextTick(async () => this.emit("message", message))
+		process.nextTick(async () => await this.read())
 
 	}
 
